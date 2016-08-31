@@ -10,6 +10,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 
+
 /**
  * A placeholder fragment containing a simple view.
  */
