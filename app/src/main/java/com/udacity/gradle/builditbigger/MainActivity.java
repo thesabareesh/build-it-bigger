@@ -1,21 +1,27 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import me.sabareesh.udacity.javajokelibrary.JokeShop;
+import me.sabareesh.udacity.jokeactivity.ViewJoke;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
+
+    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MainActivity.context = getApplicationContext();
     }
 
 
@@ -34,15 +40,17 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
 
     public void tellJoke(View view) {
-        Toast.makeText(this, JokeShop.getAJoke().toString(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.context, ViewJoke.class);
+        intent.putExtra(ViewJoke.INTENT_EXTRA_JOKE,JokeShop.getAJoke());
+        startActivity(intent);
     }
 
 
