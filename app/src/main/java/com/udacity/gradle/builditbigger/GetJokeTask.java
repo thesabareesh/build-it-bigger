@@ -1,58 +1,39 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Pair;
-import android.widget.Toast;
 
+import android.os.AsyncTask;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
-
 import java.io.IOException;
+import java.net.UnknownHostException;
 
-import me.sabareesh.udacity.jokebackend.myApi.MyApi;
+import me.sabareesh.udacity.jokebackend.jokeApi.JokeApi;
 
 /**
  * Created by SABAREESH on 01-Sep-16.
  */
-public class GetJokeTask extends AsyncTask<Pair<Context, String>, Void, String> {
-    private static MyApi myApiService = null;
-    private Context context;
+public class GetJokeTask extends AsyncTask<Void, Void, String> {
+    private static JokeApi myApiService = null;
 
     @Override
-    protected String doInBackground(Pair<Context, String>... params) {
-        if(myApiService == null) {  // Only do this once
-            MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
+    protected String doInBackground(Void... params) {
+        if(myApiService == null) {
+            JokeApi.Builder builder = new JokeApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
-                    // options for running against local devappserver
-                    // - 10.0.2.2 is localhost's IP address in Android emulator
-                    // - turn off compression when running against local devappserver
-                    .setRootUrl("http://10.0.2.2:8080/_ah/api/")
-                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                        @Override
-                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-                            abstractGoogleClientRequest.setDisableGZipContent(true);
-                        }
-                    });
-            // end options for devappserver
-
+                    .setRootUrl("https://udacity-and-jokebackend.appspot.com/_ah/api/");
             myApiService = builder.build();
         }
 
-        context = params[0].first;
-        String name = params[0].second;
-
         try {
-            return myApiService.sayHi(name).execute().getData();
-        } catch (IOException e) {
+            return myApiService.getAJoke().execute().getJokeText();
+        }
+        catch (UnknownHostException e){
+            return "Unable to connect to the internet";
+        }
+        catch (IOException e) {
             return e.getMessage();
         }
+
     }
 
-    @Override
-    protected void onPostExecute(String result) {
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-    }
 }

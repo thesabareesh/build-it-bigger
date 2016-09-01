@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             Intent intent = new Intent(mContext, ViewJoke.class);
-            intent.putExtra(ViewJoke.INTENT_EXTRA_JOKE,JokeShop.getAJoke());
+            intent.putExtra(ViewJoke.INTENT_EXTRA_JOKE,jokeText);
             mContext.startActivity(intent);
         }
 
