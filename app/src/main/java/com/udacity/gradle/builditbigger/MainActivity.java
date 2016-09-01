@@ -3,6 +3,7 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MainActivity.context = getApplicationContext();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,9 +48,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Intent intent = new Intent(MainActivity.context, ViewJoke.class);
-        intent.putExtra(ViewJoke.INTENT_EXTRA_JOKE,JokeShop.getAJoke());
-        startActivity(intent);
+        new DisplayJokeTask(this).execute();
+    }
+
+    private static class DisplayJokeTask extends GetJokeTask {
+        private final Context mContext;
+
+        public DisplayJokeTask(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected void onPostExecute(@Nullable String jokeText) {
+            if (jokeText == null) {
+                Toast.makeText(mContext, "Error - Sorry, Joker is all out", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Intent intent = new Intent(mContext, ViewJoke.class);
+            intent.putExtra(ViewJoke.INTENT_EXTRA_JOKE,JokeShop.getAJoke());
+            mContext.startActivity(intent);
+        }
+
     }
 
 
