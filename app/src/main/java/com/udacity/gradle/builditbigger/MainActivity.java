@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import me.sabareesh.udacity.javajokelibrary.JokeShop;
@@ -16,6 +19,7 @@ import me.sabareesh.udacity.jokeactivity.ViewJoke;
 
 public class MainActivity extends AppCompatActivity {
 
+    static ProgressBar spinner;
     private static Context context;
 
     @Override
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
+        spinner=(ProgressBar)findViewById(R.id.progressBar);
+        spinner.setVisibility(View.VISIBLE);
         new DisplayJokeTask(this).execute();
     }
 
@@ -61,11 +67,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(@Nullable String jokeText) {
             if (jokeText == null) {
-                Toast.makeText(mContext, "Error - Sorry, Joker is all out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Error - Sorry, Failed to fetch joke.", Toast.LENGTH_SHORT).show();
                 return;
             }
             Intent intent = new Intent(mContext, ViewJoke.class);
             intent.putExtra(ViewJoke.INTENT_EXTRA_JOKE,jokeText);
+            spinner.setVisibility(View.GONE);
             mContext.startActivity(intent);
         }
 

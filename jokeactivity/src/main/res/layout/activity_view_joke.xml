@@ -13,8 +13,10 @@
         android:id="@+id/joke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="100dp"
         android:lineSpacingMultiplier="1.15"
-        android:textSize="15sp"
+        android:textSize="18sp"
         tools:text="Joke placeholder"
         />
 </RelativeLayout>

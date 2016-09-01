@@ -16,7 +16,6 @@ public class JokeShop {
             "Hey! It compiles! Ship it!",
             "If Ruby is not and Perl is the answer, you don't understand the question.",
             "The more I C, the less I see.",
-            "COBOL programmers understand why women hate periods.",
             "If you give someone a program, you will frustrate them for a day; if you teach them how to program, you will frustrate them for a lifetime.",
             "Programmers are tools for converting caffeine into code.",
             "My attitude isn't bad. It's in beta"
