@@ -1,5 +1,4 @@
-# Build It Bigger! <div style="display:inline;"> <img style="vertical-align:middle" src="/app/src/main/res/mipmap-mdpi/ic_launcher.png"/>
-</div>
+# Build It Bigger!  <img style="vertical-align:text-bottom" src="/app/src/main/res/mipmap-mdpi/ic_launcher.png"/>
 
 
 A joke-telling Android app that fetches jokes from the GCE module and passes them to the Android Library for display. Project 4 of the Udacity Android Developer Nanodegree.
